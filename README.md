@@ -1,98 +1,97 @@
 # Food Coach sample application [![Build Status](https://travis-ci.org/watson-developer-cloud/food-coach.svg?branch=master)](https://travis-ci.org/watson-developer-cloud/food-coach)
 
-This application demonstrates how the Conversation Service can be adapted to use Tone Analyzer's tone along with intents and entities in a simple chat interface.
-
+Esta aplicação demonstra como o Conversation pode ser adaptado para usar o Tone Analyzer juntamente com intenções e entidades numa interface de chat simples.
 ![Demo GIF](readme_images/demo.gif?raw=true)
 
 Demo: http://food-coach.mybluemix.net/
 
-For more information on the Conversation Service, see the [detailed documentation](http://www.ibm.com/watson/developercloud/doc/conversation/overview.shtml).
-For more information on the Tone Analyzer Service, see the [detailed documentation](http://www.ibm.com/watson/developercloud/tone-analyzer.html).
+Para mais informações sobre o serviço Conversation, veja [detailed documentation](http://www.ibm.com/watson/developercloud/doc/conversation/overview.shtml).
+Para mais informações sobre o Tone Analyzer, veja [detailed documentation](http://www.ibm.com/watson/developercloud/tone-analyzer.html).
 
-# Deploying the application
+# Fazendo Deploy da Aplicação
 
-If you want to experiment with the application or use it as a basis for building your own application, you need to deploy it in your own environment. You can then explore the files, make changes, and see how those changes affect the running application. After making modifications, you can deploy your modified version of the application to the Bluemix cloud.
+Se você quiser experimentar o aplicativo ou usá-lo como base para criar seu próprio aplicativo, você precisa implantá-lo em seu próprio ambiente. Você pode explorar os arquivos, fazer alterações e ver como essas alterações afetam o aplicativo em execução. Depois de fazer modificações, você pode implantar a versão modificada do aplicativo no Bluemix.
 
-## Before you begin
+## Antes de começar
 
-* You must have a Bluemix account, and your account must have available space for at least 1 application and 2 services. To register for a Bluemix account, go to https://console.ng.bluemix.net/registration/. Your Bluemix console shows your available space.
+* Você deve ter uma conta no Bluemix, e sua conta deve possuir espaço para 1 aplicação e 2 serviços a serem adicionados. Para criar sua conta no Bluemix, acesse https://console.ng.bluemix.net/registration/. Seu console do Bluemix mostra seu espaço disponível.
 
-* You must also have the following prerequisites installed:
-  * the [Node.js](http://nodejs.org/) runtime (including the npm package manager)
-  * the [Cloud Foundry command-line client](https://github.com/cloudfoundry/cli#downloads)
+* Você deve ter também os seguintes pré-requisitos instalados:
+  * O runtime[Node.js](http://nodejs.org/) (incluindo o npm package manager)
+  * O [Cloud Foundry command-line client](https://github.com/cloudfoundry/cli#downloads)
 
-## Getting the files
+## Conseguindo os Arquivos
 
-1. Download the food coach application code to your computer. You can do this in either of the following ways:
+1. Baixe o código da aplicação Food Coach para o seu computador. Você pode fazer isso das seguintes maneiras:
 
-   * [Download the .zip file](https://github.com/watson-developer-cloud/food-coach/archive/master.zip) of the GitHub repository and extract the files to a local directory, OR
+   * [Baixe o arquivo .zip](https://github.com/watson-developer-cloud/food-coach/archive/master.zip) a partir do repositório Git e extraia os arquivos para um repositório local, OU
 
-   * Use GitHub to clone the repository locally
+   * Use o GitHub para clonar o repositório localmente
 
-## Setting up the Conversation service
+## Configurando o serviço Conversation
 
-1. Make sure you have logged into your Bluemix account using Cloud Foundry. For more information, see [the Watson Developer Cloud documentation](https://www.ibm.com/watson/developercloud/doc/getting_started/gs-cf.shtml).
+1. Certifique-se de estar logado no Bluemix usando o Cloud Foundry CLI. Para mais informações, veja [Documentação Watson Developer Cloud](https://www.ibm.com/watson/developercloud/doc/getting_started/gs-cf.shtml).
 
-1. Create an instance of the Conversation Service in the IBM cloud:
+1. Crie uma instância do serviço Conversation na nuvem IBM:
 
    ```bash
    cf create-service conversation <service_plan> <service_instance_name>
    ```
    Notes:
-      * <service_plan>: options include free, standard or premium.
-      * <service_instance_name>: this is a unique name of your choosing.
+      * <service_plan>: opções incluem free, standard ou premium.
+      * <service_instance_name>: esse é um nome único de sua escolha.
 
 
-   For example:
+   Por exemplo:
 
    ```bash
    cf create-service conversation free conversation-food-coach
    ```
 
-1. Create a service key:
+1. Crie uma service key:
 
    ```bash
    cf create-service-key <service_instance> <service_key>
    ```
 
-   For example:
+   Por exemplo:
 
    ```bash
    cf create-service-key conversation-food-coach conversation-food-coach-key
    ```
 
-## Setting up the Tone Analyzer service
+## Configurando o serviço Tone Analyzer
 
-1. Create an instance of the Tone Analyzer service in the IBM cloud:
+1. Crie uma instância do Tone Analyzer na nuvem IBM:
 
    ```bash
    cf create-service tone_analyzer <service_plan> <service_instance_name>
    ```
-   ```<service_plan>``` options include standard and premium.  Please note that either of these options will incur a cost.
+   ```<service_plan>``` opções incluem standard e premium.  Ambas as opções incluem custos.
 
-   For example:
+   Por exemplo:
 
    ```bash
    cf create-service tone_analyzer standard tone-analyzer-food-coach
    ```
 
-1. Create a service key:
+1. Crie uma service key:
 
    ```bash
    cf create-service-key <service_instance> <service_key>
    ```
 
-   For example:
+   Por exemplo:
 
    ```bash
    cf create-service-key tone-analyzer-food-coach tone-analyzer-food-coach-key
    ```
 
-### Importing the Conversation workspace
+### Importando o workspace do Conversation
 
-1. In your browser, navigate to your [Bluemix console](https://console.ng.bluemix.net).
+1. No seu navegador, vá para seu [Bluemix console](https://console.ng.bluemix.net).
 
-1. From the **Dashboard** tab, click the newly created Conversation service in the **Services** list.  It'll have the name you gave it in the previous step (e.g., ```<service_instance_name>```).
+1. A partir da aba **Dashboard** , clique no novo serviço Conversation na lista **Services**.  Este terá o nome que você deu no último passo. (e.g., ```<service_instance_name>```).
 
    ![Screen capture of Services list](readme_images/conversation_food_coach_service.png)
 
