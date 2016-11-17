@@ -95,44 +95,44 @@ Se você quiser experimentar o aplicativo ou usá-lo como base para criar seu pr
 
    ![Screen capture of Services list](readme_images/conversation_food_coach_service.png)
 
-   The Service Details page opens.
+   A pagina de detalhes do serviço se abre.
 
-1. Click the **Launch tool** button.
+1. Clique em **Launch tool**.
 
    ![Screen capture of Launch tool button](readme_images/launch_tool_button.png)
 
-   The Conversation service tool opens.
+   O Conversation service tool abre.
 
-1. Click **Import** to add the food coach workspace. When prompted, specify the location of the workspace JSON file in your local copy of the application project:
+1. Clique **Import** para adicionar o workspace do foodcoach. Quando solicitado, especifique o local que o arquivo JSON do workspace se encontra na sua cópia local do projeto:
 
    `<project_root>/food-coach/training/food-coach-workspace.json`
 
-1. Select **Everything (Intents, Entities, and Dialog)** and then click **Import**. The food coach workspace is created.
-   * If you have any problems uploading the workspace using Chrome, please try another browser such as Firefox or Safari.
+1. Selecione **Everythin (Intents, Entities, and Dialog)** e clique em **Import**. O workspace do food coach é criado.
+   * Se você tiver algum problema fazendo o upload do workspace usando o Chrome, por favor tente usando outro browser(Firefox ou Safari).
 
-## Configuring the application environment
+## Configurando o ambiente da aplicação
 
-1. At the command line, navigate to the local project directory (`<project_root>/food-coach`).
+1. Na linha de comando, navegue até a pasta local do projeto (`<project_root>/food-coach`).
 
-1. Copy the `.env.example` file to a new `.env` file. Open this file in a text editor.
+1. Copie o arquivo `.env.example` em um novo arquvio `.env`. Abra este arquivo num editor de texto.
 
 ```bash
    cp .env.example .env
    ```
 
-1. Retrieve the credentials from the service key:
+1. Pegue as credenciais da service key:
 
    ```bash
    cf service-key <service_instance_name> <service_key>
    ```
 
-   For example:
+   Por exemplo:
 
    ```bash
    cf service-key conversation-food-coach conversation-food-coach-key
    ```
 
-   The output from this command is a JSON object, as in this example:
+   A saída deste comando é um objeto JSON, como no exemplo abaixo:
 
    ```javascript
    {
@@ -142,65 +142,65 @@ Se você quiser experimentar o aplicativo ou usá-lo como base para criar seu pr
    }
    ```
 
-1. In the JSON output, find the values for the `password` and `username` keys. Paste these values (not including the quotation marks) into the `CONVERSATION_PASSWORD` and `CONVERSATION_USERNAME` variables in the `.env` file:
+1. No JSON de saída, encontre os valores para "password" e "username". Cole estes valores(sem incluir as aspas) nas variáveis `CONVERSATION_PASSWORD` e `CONVERSATION_USERNAME` no arquivo `.env`:
 
    ```
    CONVERSATION_USERNAME=ca2905e6-7b5d-4408-9192-e4d54d83e604
    CONVERSATION_PASSWORD=87iT7aqpvU7l
    ```
-Do the same for the Tone Analyzer service, and paste the values into the `TONE_ANALYZER_PASSWORD` and `TONE_ANALYZER_USERNAME` variables in the `.env` file
+Faça o mesmo para o serviço Tone Analyzer, e cole os valores nas variáveis `TONE_ANALYZER_PASSWORD` e `TONE_ANALYZER_USERNAME` no arquivo `.env`
    ```
    TONE_ANALYZER_USERNAME=mhl715fg-y6h5-2113-6540-ytr78nhs8u64
    TONE_ANALYZER_PASSWORD=124GHaq31M9l
    ```
 
-   Leave the `.env` file open in your text editor.
+   Deixe o arquivo `.env` aberto no editor de texto.
 
-1. In your Bluemix console, open the Conversation service instance where you imported the workspace.
+1. No seu console do Bluemix, abra a instância do Conversation aonde você importou o workspace.
 
-1. Click the menu icon in the upper right corner of the workspace tile, and then select **View details**.
+1. Clique no ícone de menu no canto superior direito do bloco do workspace, e escolha **View details**.
 
    ![Screen capture of workspace tile menu](readme_images/conversation_food_coach_workspace_details.png)
 
-   The tile shows the workspace details.
+   O bloco mostra os detalhes do workspace.
 
-1. Click the ![Copy](readme_images/copy_icon.png) icon next to the workspace ID to copy the workspace ID to the clipboard.
+1. Clique no ícone ![Copy](readme_images/copy_icon.png) próximo ao workspace ID para copiar o workspace ID.
 
-1. Back on your local system, paste the workspace ID into the WORKSPACE_ID variable in the `.env` file you previously created. At this point, your `.env` file should look like the following:
+1. Cole o workspace ID na variável WORKSPACE_ID no arquivo `.env` que você criou anteriormente. Seu arquivo `.env` deve se parecer com o seguinte:
 
    ![Screen capture of env file](readme_images/env_file_example.png)
 
-Save and close the file.
+Salve e feche o arquivo.
 
-1. Install the demo application package into the local Node.js runtime environment:
+1. Instale os pacotes do Node.js para a aplicação no seu ambiente local:
 
    ```bash
    npm install
    ```
 
-1. Start the application:
+1. Inicie a aplicação:
 
     ```bash
     npm start
     ```
 
-The application is now deployed and running on the local system. Go to `http://localhost:3000` in your browser to try it out.
+A aplicação é instanciada e executada localmente. Vá para `http://localhost:3000` no seu navegador para testá-la.
 
-## Optional: Deploying from the local system to Bluemix
+## Opcional: Instanciândo no Bluemix à partir
 
-If you want to subsequently deploy your local version of the application to the Bluemix cloud, you can use Cloud Foundry.
+Se você quiser fazer o deploy desta aplicação no seu Bluemix, você pode usar o Cloud Foundry.
 
-1. In the project root directory, open the `manifest.yml` file in a text editor.
+1. Na pasta raíz do projeto, abra o arquivo `manifest.yml` num editor de texto.
 
-1. Specify the following values in the file:
+1. Especifíque os seguintes valores no arquivo:
 
-   * In the `applications` section of the `manifest.yml` file, change the `name` value to a unique name for your version of the demo application.
+   * Na seção `applications` do arquivo `manifest.yml`, Mude o valor `name` para um nome único para a sua versão da aplicação.
+   
+   * Na seção `services`, especifíque o nome do serviço Conversation que você criou para a aplicação. Se você não lembrar o nome do serviço, use o comando `cf services` para listar todos os serviços que você criou.
 
-   * In the `services` section, specify the name of the Conversation service instance you created for the demo application. If you do not remember the service name, use the `cf services` command to list all services you have created.
+   * Na seção `env`, adicione a variável `WORKSPACE_ID`, especificando o valor do arquivo `.env`.
 
-   * In the `env` section, add the `WORKSPACE_ID` environment variable, specifying the value from the `.env` file.
-
-   The following example shows a modified `manifest.yml` file:   
+   O exemplo a seguir mostra uma versão modificada do arquivo `manifest.yml`:   
 
    ```YAML
    ---
@@ -225,65 +225,65 @@ If you want to subsequently deploy your local version of the application to the 
        WORKSPACE_ID: fdeab5e4-0ebe-4183-8d10-6e5557a6d842
     ```
 
-1. Save and close the `manifest.yml` file.
+1. Salve e feche o arquivo `manifest.yml`.
 
-1. Push the application to Bluemix:
+1. Suba a aplicação para o Bluemix:
 
    ```bash
    cf push
    ```
 
-When the command finishes processing, your application is deployed and running on Bluemix. You can access it using the URL specified in the command output.
+Quando o comando terminar de processar, sua aplicação será instanciada e executada no Bluemix. Você pode acessá-la através da URL especificada na saída do comando.
 
-# What to do next
+# Próximos passos
 
-After you have the application installed and running, experiment with it to see how it responds to your input.
+Depois que a aplicação estiver instanciada e rodando, experimente como ela responde aos seus inputs.
 
-## Modifying the application
+## Modificando a aplicação
 
-After you have the application deployed and running, you can explore the source files and make changes. Try the following:
+Depois que a aplicação estiver instanciada e rodando, você pode explorar os arquivos fonte e fazer mudanças. Tente o seguinte:
 
-   * Modify the .js files to change the application logic.
+   * Modifique os arquivos .js para fazer mudanças na lógica da aplicação.
 
-   * Modify the .html file to change the appearance of the application page.
+   * Modifique o arquivo .html para mudar a aparência da aplicação.
 
-   * Use the Conversation tool to train the service for new intents, or to modify the dialog flow. For more information, see the [Conversation service documentation](http://www.ibm.com/watson/developercloud/doc/conversation/index.shtml).
+   * Use o Conversation tool para treinar o serviço para novas intenções, entidades, ou tente modificar o fluxo de diálogo. Para mais informações, veja [Conversation service documentation](http://www.ibm.com/watson/developercloud/doc/conversation/index.shtml).
 
-# What does the Food Coach application do?
+# O que a aplicação Food Coach faz?
 
-The application interface is designed for chatting with a coaching bot. Based on the time of day, it asks you if you've had a particular meal (breakfast, lunch, or dinner) and what you ate for that meal.
+A interface da aplicação foi desenhada para conversar com um bot. Baseado na hora do dia, o bot te pergunta se você fez alguma refeição em particular (café da manhã, almoço ou jantar) e o que você comeu nessa refeição.
 
-The chat interface is in the left panel of the UI, and the JSON response object returned by the Conversation Service in the right panel. Your input is run against a small set of sample data trained with the following intents:
+A interface do chat está no painel da esquerda, e o objeto de resposta JSON, que é retornado pelo Conversation, no painel da direita. Seu input é comparado com um set pequeno de exemplos, treinado com as seguintes intenções:
 
-    yes: acknowledgment that the specified meal was eaten
-    no: the specified meal was not eaten
+    yes: entendimento que a refeição especificada foi feita
+    no: a refeição especificada não foi feita
     help
     exit
 
-The dialog is also trained on two types of entities:
+O diálogo também é treinado em 2 tipos de entidades:
 
     food items
     unhealthy food items
 
-These intents and entities help the bot understand variations your input.
+Essas intenções e entidades ajudam o bot a entender variações de input.
 
-After asking you what you ate (if a meal was consumed), the bot asks you how you feel about it. Depending on your emotional tone, the bot provides different feedback.
+Depois de perguntar o que você comeu(se comeu), o bot pergunta como você se sente ao ter comido. Dependendo do seu tom emocional, o bot produz diferentes respostas.
 
-Below you can find some sample interactions:
+Abaixo você pode ver alguns exemplos de interação:
 
 ![Alt text](readme_images/examples.jpeg?raw=true)
 
-In order to integrate the Tone Analyzer with the Conversation service, the following approach was taken:
-   * Intercept the user's message. Before sending it to the Conversation Service, invoke the Tone Analyzer Service. See the call to `toneDetection.invokeToneAsync` in the `invokeToneConversation` function in [app.js](./app.js).
-   * Parse the JSON response object from the Tone Analyzer Service, and add appropriate variables to the context object of the JSON payload to be sent to the Conversation Service. See the `updateUserTone` function in [tone_detection.js](./addons/tone_detection.js).
-   * Send the user input, along with the updated context object in the payload to the Conversation Service. See the call to `conversation.message` in the `invokeToneConversation` function in [app.js](./app.js).
+Para integrar o Tone Analyzer com o Conversation, a seguinte abordagem foi feita:
+   * Interceptar a mensagem do usuário. Antes de mandá-la para o Conversation, invocar o Tone Analyzer. Veja a chamada para `toneDetection.invokeToneAsync` na função `invokeToneConversation` no arquivo [app.js](./app.js).
+   * Fazer um parse do JSON de resposta do Tone Analyzer, e adicionar variáveis apropriadas para o objeto context do JSON que será enviado para o Conversation. Veja a função `updateUserTone` no arquivo [tone_detection.js](./addons/tone_detection.js).
+   * Mandar o input do usuário, juntamente com o objeto context atualizado no payload para o Conversation. Veja a chamada para `conversation.message` na função `invokeToneConversation` no arquivo [app.js](./app.js).
 
 
-You can see the JSON response object from the Conversation Service in the right hand panel.
+Você pode ver o JSON de resposta do Conversation no painel da direita.
 
 ![Alt text](readme_images/tone_context.jpeg?raw=true)
 
-In the conversation template, alternative bot responses were encoded based on the user's emotional tone. For example:
+No template de conversa, respostas alternativas do bot foram fixadas com base no tom emocional do usuário. Por exemplo:
 
 ![Alt text](readme_images/rule.png?raw=true)
 
@@ -292,7 +292,7 @@ In the conversation template, alternative bot responses were encoded based on th
 
 # Troubleshooting
 
-If you encounter a problem, you can check the logs for more information. To see the logs, run the `cf logs` command:
+Se você encontrou algum problema, você pode checar os logs para mais informações. Para ver o log, execute o comando `cf logs`:
 
    ```bash
    cf logs <application-name> --recent
